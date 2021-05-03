@@ -40,7 +40,7 @@
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>PushButton</string>
+        <string>End Turn!</string>
        </property>
       </widget>
      </item>
@@ -144,7 +144,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="FarkleResources.qrc">:/4</pixmap>
+     <pixmap resource="../Farkle/FarkleResources.qrc">:/4</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -163,7 +163,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="FarkleResources.qrc">:/6</pixmap>
+     <pixmap resource="../Farkle/FarkleResources.qrc">:/6</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -182,7 +182,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="FarkleResources.qrc">:/5</pixmap>
+     <pixmap resource="../Farkle/FarkleResources.qrc">:/5</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -201,7 +201,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="FarkleResources.qrc">:/3</pixmap>
+     <pixmap resource="../Farkle/FarkleResources.qrc">:/3</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -223,7 +223,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="FarkleResources.qrc">:/2</pixmap>
+     <pixmap resource="../Farkle/FarkleResources.qrc">:/2</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -241,6 +241,9 @@
     <property name="text">
      <string>Hold</string>
     </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QCheckBox" name="dieBox1">
     <property name="geometry">
@@ -255,7 +258,7 @@
      <string>Hold</string>
     </property>
     <property name="checkable">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="checked">
      <bool>false</bool>
@@ -273,6 +276,9 @@
     <property name="text">
      <string>Hold</string>
     </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QCheckBox" name="dieBox4">
     <property name="geometry">
@@ -285,6 +291,9 @@
     </property>
     <property name="text">
      <string>Hold</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QCheckBox" name="dieBox5">
@@ -299,6 +308,9 @@
     <property name="text">
      <string>Hold</string>
     </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QCheckBox" name="dieBox6">
     <property name="geometry">
@@ -311,6 +323,9 @@
     </property>
     <property name="text">
      <string>Hold</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="die1View">
@@ -326,13 +341,13 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="FarkleResources.qrc">:/1</pixmap>
+     <pixmap resource="../Farkle/FarkleResources.qrc">:/1</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QSpinBox" name="amountToBetUI">
+   <widget class="QSpinBox" name="amountToBet">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -355,7 +370,7 @@
      <string>1000000</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="TemporaryScore">
+   <widget class="QLineEdit" name="temporaryScoreUI">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -368,7 +383,7 @@
      <string>0</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="TotalScore">
+   <widget class="QLineEdit" name="totalScoreUI">
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -548,10 +563,10 @@
    <zorder>dieBox5</zorder>
    <zorder>dieBox6</zorder>
    <zorder>die1View</zorder>
-   <zorder>amountToBetUI</zorder>
+   <zorder>amountToBet</zorder>
    <zorder>currentBankValueUI</zorder>
-   <zorder>TemporaryScore</zorder>
-   <zorder>TotalScore</zorder>
+   <zorder>temporaryScoreUI</zorder>
+   <zorder>totalScoreUI</zorder>
    <zorder>preferencesSelectButton</zorder>
    <zorder>restartButton</zorder>
    <zorder>BetLabel</zorder>
@@ -566,14 +581,15 @@
      <x>0</x>
      <y>0</y>
      <width>959</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="FarkleResources.qrc"/>
+  <include location="../Farkle/PyQtStarterResources.qrc"/>
+  <include location="../Farkle/FarkleResources.qrc"/>
  </resources>
  <connections/>
 </ui>

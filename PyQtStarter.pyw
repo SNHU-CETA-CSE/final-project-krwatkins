@@ -58,6 +58,9 @@ class PyQtStarter(QMainWindow):
         self.currentBet = 0
         self.rollValue = 0
         self.currentBank = 999
+        self.temporaryScore = 0
+        self.totalScore = 0
+        self.bust = False
 
         self.preferencesSelectButton.clicked.connect(self.preferencesSelectButtonClickedHandler)
         self.pushButton.clicked.connect(self.pushButtonClickedHandler)
@@ -87,6 +90,9 @@ class PyQtStarter(QMainWindow):
         self.die5View.setPixmap(QtGui.QPixmap(":/" + str(self.die5.getValue())))
         self.die6View.setPixmap(QtGui.QPixmap(":/" + str(self.die6.getValue())))
         self.textOutputUI.setText(self.textOutput)
+        self.currentBankValueUI.setText(str(self.currentBank))
+        self.temporaryScoreUI.setText(str(self.temporaryScore))
+        self.totalScoreUI.setText(str(self.totalScore))
 
         # Player asked for another roll of the dice.
     def restartGame(self):
@@ -155,20 +161,43 @@ class PyQtStarter(QMainWindow):
 
     def pushButtonClickedHandler(self):
         print("Inside pushButtonClickedHandler()\n")
-        if (self.textOutput != "Hello World!" or self.textOutput == ""):
-            self.textOutput = "Hello World!"
+        if (self.textOutput != "Rounds over!" or self.textOutput == ""):
+            self.textOutput = "Rounds over!"
         else:
-            self.textOutput = "Happy to Meet You."
+            self.textOutput = "Updating the score."
+        self.totalScore = self.totalScore + self.temporaryScore
+        self.temporaryScore = 0
         self.updateUI()
 
     def rollButtonClickedHandler(self):
-        print("Roll button clicked")
-        self.currentBet = self.amountToBetUI.value()
-        for boxNumber, die in enumerate(self.dice):
-            if self.dieBoxStates[boxNumber] == False:
-                die.roll()
-        self.rollValue = self.die1.getValue() + self.die2.getValue() + self.die3.getValue() + self.die4.getValue() + self.die5.getValue() + self.die6.getValue()
+        self.currentBet = self.amountToBet.value()
+        if self.currentBet >= 1:
+            print("Roll button clicked")
+            if (self.textOutput != "Rolling!" or self.textOutput == ""):
+                self.textOutput = "Rolling!"
+            else:
+                self.textOutput = "Feeling lucky?"
+
+            for boxNumber, die in enumerate(self.dice):
+                if self.dieBoxStates[boxNumber] == False:
+                    die.roll()
+                    # trying to make the checkboxes checkable here
+                else:
+                    die.getValue()
+                    if(die.getValue() == 1):
+                        self.temporaryScore += 100
+                    elif (die.getValue() == 5):
+                        self.temporaryScore += 50
+                    else:
+                        self.textOutput = "BUST"
+                        self.temporaryScore = 0
+
+
+        else:
+            self.textOutput = "Make a bet!"
+
         self.updateUI()
+
 
     @pyqtSlot(int)
     def dieBoxClickedHandler(self, boxNumber):
