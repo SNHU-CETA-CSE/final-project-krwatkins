@@ -66,10 +66,10 @@ class PyQtStarter(QMainWindow):
         self.pushButton.clicked.connect(self.pushButtonClickedHandler)
         self.rollButton.clicked.connect(self.rollButtonClickedHandler)
 
-        # self.dieBox1.stateChanged.connect(self.dieBoxClickedHandler())
         self.dice = [self.die1, self.die2, self.die3, self.die4, self.die5, self.die6]
         self.dieBoxes = [self.dieBox1, self.dieBox2, self.dieBox3, self.dieBox4, self.dieBox5, self.dieBox6]
         self.dieBoxStates = [False, False, False, False, False, False]
+        self.dieValueCounts = [0, 0, 0, 0, 0, 0, 0]
 
         self.mapper = QSignalMapper()
         for boxNumber, boxName in enumerate(self.dieBoxes):
@@ -182,22 +182,25 @@ class PyQtStarter(QMainWindow):
                 if self.dieBoxStates[boxNumber] == False:
                     die.roll()
                     # trying to make the checkboxes checkable here
-                else:
-                    die.getValue()
-                    if(die.getValue() == 1):
-                        self.temporaryScore += 100
-                    elif (die.getValue() == 5):
-                        self.temporaryScore += 50
-                    else:
-                        self.textOutput = "BUST"
-                        self.temporaryScore = 0
+            self.dieValueCounts = [0, 0, 0, 0, 0, 0, 0]
+            for die in self.dice:
+                self.dieValueCounts[die.getValue()] += 1
 
+            if self.dieValueCounts.count(2) >= 1:
+                print("two of a kind")
+            if self.dieValueCounts.count(3) >= 1:
+                print("three of a kind")
 
+            if(die.getValue() == 1):
+                self.temporaryScore += 100
+            elif (die.getValue() == 5):
+                self.temporaryScore += 50
+            else:
+                self.textOutput = "BUST"
+                self.temporaryScore = 0
         else:
             self.textOutput = "Make a bet!"
-
         self.updateUI()
-
 
     @pyqtSlot(int)
     def dieBoxClickedHandler(self, boxNumber):
