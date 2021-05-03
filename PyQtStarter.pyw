@@ -6,7 +6,7 @@ from os import path
 from logging import basicConfig, getLogger, DEBUG, INFO, CRITICAL
 from pickle import dump, load
 import FarkleResources_rc
-import PyQtStarterResources_rc
+# import PyQtStarterResources_rc
 from PyQt5 import QtGui, uic
 from PyQt5.QtCore import pyqtSlot, QSettings, Qt, QTimer, QCoreApplication, QSignalMapper
 from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog, QMessageBox
@@ -59,40 +59,33 @@ class PyQtStarter(QMainWindow):
         self.rollValue = 0
         self.currentBank = 999
 
-
-
         self.preferencesSelectButton.clicked.connect(self.preferencesSelectButtonClickedHandler)
         self.pushButton.clicked.connect(self.pushButtonClickedHandler)
         self.rollButton.clicked.connect(self.rollButtonClickedHandler)
 
-        self.dieBox1.stateChanged.connect(self.dieBoxClickedHandler())
+        # self.dieBox1.stateChanged.connect(self.dieBoxClickedHandler())
+        self.dice = [self.die1, self.die2, self.die3, self.die4, self.die5, self.die6]
+        self.dieBoxes = [self.dieBox1, self.dieBox2, self.dieBox3, self.dieBox4, self.dieBox5, self.dieBox6]
+        self.dieBoxStates = [False, False, False, False, False, False]
 
         self.mapper = QSignalMapper()
-        for boxNumber, boxName in enumerate(self.die1Box):
-            boxName.clicked.connect(self.mapper.map)
-        self.mapper.setMapping(boxName, boxNumber + 1)
-        self.mapper.mapped.connect(self.pushButtonClickedHandler)
+        for boxNumber, boxName in enumerate(self.dieBoxes):
+            boxName.stateChanged.connect(self.mapper.map)
+            self.mapper.setMapping(boxName, boxNumber + 1)
+        self.mapper.mapped.connect(self.dieBoxClickedHandler)
 
     def __str__(self):
         """String representation for PyQtStarter.
         """
-
         return "Gettin' started with Qt!!"
 
     def updateUI(self):
-
         self.die1View.setPixmap(QtGui.QPixmap(":/" + str(self.die1.getValue())))
-
         self.die2View.setPixmap(QtGui.QPixmap(":/" + str(self.die2.getValue())))
-
         self.die3View.setPixmap(QtGui.QPixmap(":/" + str(self.die3.getValue())))
-
         self.die4View.setPixmap(QtGui.QPixmap(":/" + str(self.die4.getValue())))
-
         self.die5View.setPixmap(QtGui.QPixmap(":/" + str(self.die5.getValue())))
-
         self.die6View.setPixmap(QtGui.QPixmap(":/" + str(self.die6.getValue())))
-
         self.textOutputUI.setText(self.textOutput)
 
         # Player asked for another roll of the dice.
@@ -170,12 +163,16 @@ class PyQtStarter(QMainWindow):
 
     def rollButtonClickedHandler(self):
         print("Roll button clicked")
-        # self.currentBet = self.spinBox.value()
-        self.rollValue = self.die1.roll() + self.die2.roll() + self.die3.roll() + self.die4.roll() + self.die5.roll() + self.die6.roll()
+        self.currentBet = self.amountToBetUI.value()
+        for boxNumber, die in enumerate(self.dice):
+            if self.dieBoxStates[boxNumber] == False:
+                die.roll()
+        self.rollValue = self.die1.getValue() + self.die2.getValue() + self.die3.getValue() + self.die4.getValue() + self.die5.getValue() + self.die6.getValue()
         self.updateUI()
 
-    def dieBoxClickedHandler(self):
-        self.dieBox1 = self.die1Box.isChecked()
+    @pyqtSlot(int)
+    def dieBoxClickedHandler(self, boxNumber):
+        self.dieBoxStates[boxNumber - 1] = self.dieBoxes[boxNumber - 1].isChecked()
 
     @pyqtSlot()  # User is requesting preferences editing dialog box.
     def preferencesSelectButtonClickedHandler(self):

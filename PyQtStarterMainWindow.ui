@@ -332,7 +332,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QSpinBox" name="amountToBet">
+   <widget class="QSpinBox" name="amountToBetUI">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -548,7 +548,7 @@
    <zorder>dieBox5</zorder>
    <zorder>dieBox6</zorder>
    <zorder>die1View</zorder>
-   <zorder>amountToBet</zorder>
+   <zorder>amountToBetUI</zorder>
    <zorder>currentBankValueUI</zorder>
    <zorder>TemporaryScore</zorder>
    <zorder>TotalScore</zorder>
@@ -566,14 +566,13 @@
      <x>0</x>
      <y>0</y>
      <width>959</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="PyQtStarterResources.qrc"/>
   <include location="FarkleResources.qrc"/>
  </resources>
  <connections/>
