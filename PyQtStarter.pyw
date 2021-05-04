@@ -181,25 +181,26 @@ class PyQtStarter(QMainWindow):
             for boxNumber, die in enumerate(self.dice):
                 if self.dieBoxStates[boxNumber] == False:
                     die.roll()
-                    # trying to make the checkboxes checkable here
-            self.dieValueCounts = [0, 0, 0, 0, 0, 0, 0]
-            for die in self.dice:
-                self.dieValueCounts[die.getValue()] += 1
 
-            if self.dieValueCounts.count(2) >= 1:
-                print("two of a kind")
-            if self.dieValueCounts.count(3) >= 1:
-                print("three of a kind")
+                    # trying to make the checkboxes checkable here.
+                if self.dieBoxStates[boxNumber] == True:
+                    self.dieValueCounts = [0, 0, 0, 0, 0, 0, 0]
+                    for die in self.dice:
+                        self.dieValueCounts[die.getValue()] += 1
 
-            if(die.getValue() == 1):
-                self.temporaryScore += 100
-            elif (die.getValue() == 5):
-                self.temporaryScore += 50
+                    if self.dieValueCounts.count(2) >= 1:
+                        self.temporaryScore += 400
+                    elif self.dieValueCounts.count(3) >= 1:
+                        self.temporaryScore += 600
+                    elif(die.getValue() == 1):
+                        self.temporaryScore += 100
+                    elif (die.getValue() == 5):
+                        self.temporaryScore += 50
+                    else:
+                        self.textOutput = "BUST"
+                        self.temporaryScore = 0
             else:
-                self.textOutput = "BUST"
-                self.temporaryScore = 0
-        else:
-            self.textOutput = "Make a bet!"
+                self.textOutput = "Make a bet!"
         self.updateUI()
 
     @pyqtSlot(int)
